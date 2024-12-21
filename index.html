@@ -3,23 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>John Doe - Personal Site</title>
+    <title>Dan Cooley</title>
     <style>
+        :root {
+            --bg-color: #fafafa;
+            --text-color: #333;
+            --link-color: #0066cc;
+            --link-hover-bg: #0066cc;
+            --link-hover-text: white;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --link-color: #66b3ff;
+            --link-hover-bg: #66b3ff;
+            --link-hover-text: #1a1a1a;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
             max-width: 650px;
             margin: 0 auto;
             padding: 2rem;
-            background-color: #fafafa;
-            color: #333;
-        }
-
-        .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
 
         h1 {
@@ -40,17 +50,17 @@
         }
 
         a {
-            color: #0066cc;
+            color: var(--link-color);
             text-decoration: none;
             padding: 0.5rem 1rem;
-            border: 1px solid #0066cc;
+            border: 1px solid var(--link-color);
             border-radius: 4px;
             transition: all 0.2s ease;
         }
 
         a:hover {
-            background: #0066cc;
-            color: white;
+            background: var(--link-hover-bg);
+            color: var(--link-hover-text);
         }
 
         .profile-img {
@@ -59,19 +69,75 @@
             border-radius: 60px;
             margin-bottom: 2rem;
         }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        [data-theme="dark"] .theme-toggle .moon {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-toggle .sun {
+            display: block;
+        }
+
+        .theme-toggle .sun {
+            display: none;
+        }
+
+        .theme-toggle .moon {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img class="profile-img" src="/api/placeholder/120/120" alt="Profile picture">
-        <h1>John Doe</h1>
-        <p>Hi, I'm John. I'm a software engineer based in San Francisco, focused on building simple and elegant solutions to complex problems.</p>
-        <p>Currently working on developer tools at TechCorp. Previously, I helped build infrastructure at StartupXYZ.</p>
-        <div class="links">
-            <a href="#" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span class="sun">☀️</span>
+        <span class="moon">🌙</span>
+    </button>
+    <h1>Hi, I'm Dan</h1>
+    <p>A business development manager based in Philadelphia, focused on building simple and elegant solutions to complex problems.</p>
+    <p>Currently working on developer tools at TechCorp. Previously, I helped build infrastructure at StartupXYZ.</p>
+    <div class="links">
+        <a href="#" target="_blank" rel="noopener noreferrer">Twitter</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.documentElement;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        // Check for user's preferred color scheme
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
 </body>
 </html>
